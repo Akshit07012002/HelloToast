@@ -10,7 +10,7 @@ import android.widget.Toast;
 
     public class MainActivity extends AppCompatActivity {
 
-        private int c = 0;
+        private final int c = 0;
         private int mCount = 0;
         private TextView mShowCount;
 
@@ -30,20 +30,37 @@ import android.widget.Toast;
         @SuppressLint("SetTextI18n")
         public void countUP(View view) {
             Toast toast;
-            mCount++;
+
             if(mShowCount != null){
                 if(mCount > 9999)
                 {
-                    toast = Toast.makeText(this, "Press Reset. RN.", Toast.LENGTH_SHORT);
+                    toast = Toast.makeText(this, "Press Reset. RN. ", Toast.LENGTH_SHORT);
                     toast.show();
                 }
-                else
+                else{
+                    mCount++;
                     mShowCount.setText(Integer.toString(mCount));
+                }
+
             }
         }
 
         public void reset(View view) {
             mCount = -1;
             countUP(view);
+        }
+
+        public void addCountHundred(View view) {
+
+            Toast toast;
+            if(mCount > 9899)
+            {
+                toast = Toast.makeText(this, "Press Reset. RN. ", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+            else {
+                mCount += 99;
+                countUP(view);
+            }
         }
     }
