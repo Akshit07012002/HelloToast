@@ -1,5 +1,6 @@
     package com.example.hellotoast;
 
+    import androidx.annotation.NonNull;
     import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -13,9 +14,22 @@ import android.widget.Toast;
 
         private final int c = 0;
         private int mCount = 0;
+        private static final String STATE_COUNTER = "counter";
         private TextView mShowCount;
 
 
+        // The method below helps in saving the state. Here, I'm saving the state of the mCount <></>extView
+        // because I need to have the value saved for when the orientation changes.
+        // When orientation changes, the activities and fragments get instantiated again,
+        // hence, their states are lost. To prevent this, we implement the given function.
+        // note : the state is to be restored later!
+        @Override
+        protected void onSaveInstanceState(@NonNull Bundle outState) {
+            super.onSaveInstanceState(outState);
+            outState.putInt(STATE_COUNTER,mCount);
+        }
+
+        @SuppressLint("SetTextI18n")
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -23,6 +37,12 @@ import android.widget.Toast;
             mShowCount = findViewById(R.id.show_count);
             Button subtractOne = findViewById(R.id.sub1_button);
             subtractOne.setOnClickListener(subtractListener);
+
+            // this block below denotes the restoration of an already stored state of the mCount TextView
+            if (savedInstanceState != null) {
+                mCount = savedInstanceState.getInt(STATE_COUNTER, 0);
+                mShowCount.setText(Integer.toString(mCount));
+            }
         }
 
         private final View.OnClickListener subtractListener = view -> {
