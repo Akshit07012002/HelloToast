@@ -6,4 +6,5 @@
     <string name="toast_message">Hello Toast!</string>
     <string name="reset_button">RESET</string>
     <string name="add_100">Add 100</string>
+    <string name="subtract_one_button">- 1</string>
 </resources>
